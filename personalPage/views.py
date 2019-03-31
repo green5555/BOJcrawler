@@ -13,12 +13,18 @@ def query_id(request):
 # TODO : 주기적으로 크롤링 하는 하는 방법 알아보기
 
 def crawling_Acceptance(myID) :
+
+    fetched_problem_set = UserPageCrawler(myID).crawl()
+
+    #DB에 BOJid = myID인 객체가 있나 확인, 없으면 생성
+    if Member.objects.filter(BOJid = myID).exists() == False :
+        Member.objects.create(BOJid = myID)
+
     try :
         myMember = get_object_or_404(Member, BOJid = myID)
     except :
         raise Http404("해당 멤버가 어째선지 만들어지지 않았어요..")
     
-    fetched_problem_set = UserPageCrawler(myID).crawl()
     acceptance_problem_set = set([accept.solved.number for accept in Acceptance.objects.filter(who=myMember)])
 
     problem_to_add_list = []
@@ -46,10 +52,6 @@ def crawling_Acceptance(myID) :
 def view_personal_stat(request, myID):
 
     #if request.method == 'POST'
-
-    #DB에 BOJid = myID인 객체가 있나 확인, 없으면 생성
-    if Member.objects.filter(BOJid = myID).exists() == False :
-        Member.objects.create(BOJid = myID)
 
     myMeber = crawling_Acceptance(myID)
 
