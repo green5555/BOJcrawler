@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from .utils import ProblemCrawler, UserPageCrawler
+#from .utils import ProblemCrawler, UserPageCrawler
 from .models import Member, Problem, Acceptance
 
 def query_id(request):
@@ -11,7 +11,7 @@ def query_id(request):
     
 
 # TODO : 주기적으로 크롤링 하는 하는 방법 알아보기
-
+'''
 def crawling_Acceptance(myID) :
 
     fetched_problem_set = UserPageCrawler(myID).crawl()
@@ -34,12 +34,12 @@ def crawling_Acceptance(myID) :
         if Problem.objects.filter(number = number_to_add).exists() == False :
             myCrawler = ProblemCrawler(number_to_add)
             myCrawler.crawl()
-            problem_to_add_list.append(Problem(number = myCrawler.number, title = myCrawler.title))
+            problem_to_add_list.append(Problem(number = myCrawler.number, title = myCrawler.title, solveNumber = myCrawler.solveNumber))
     Problem.objects.bulk_create(problem_to_add_list)
 
     acceptance_to_add_list = []
     for num in number_to_accept_list :
-        acceptance_to_add_list.append(Acceptance(who = myMember, solved = Problem.objects.get(number = num), solvedNumber = num))
+        acceptance_to_add_list.append(Acceptance(who = myMember, solved = Problem.objects.get(number = num), problemNumber = num))
     Acceptance.objects.bulk_create(acceptance_to_add_list)
 
     for number_to_erase in acceptance_problem_set - fetched_problem_set : 
@@ -47,17 +47,17 @@ def crawling_Acceptance(myID) :
 
     return myMember
     # Problem.objects.create(number = problem[0], title = problem[1], who = myMember)
-
+'''
 
 def view_personal_stat(request, myID):
 
     #if request.method == 'POST'
 
-    myMeber = crawling_Acceptance(myID)
+    #myMeber = crawling_Acceptance(myID)
 
     problem_list = []
-    for accept in Acceptance.objects.filter(who=myMeber).order_by('solvedNumber') :
-        problem_list.append(accept.solved)
+    for accept in Acceptance.objects.filter(member_BOJid=myMeber).order_by('problem_index') :
+        problem_list.append(accept.problem_key)
     
     data = {
         'myID' : myID,
