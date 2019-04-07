@@ -56,12 +56,12 @@ def view_personal_stat(request, myID):
     #myMeber = crawling_Acceptance(myID)
 
     problem_list = []
-    for accept in Acceptance.objects.filter(member_BOJid=myMeber).order_by('problem_index') :
+    for accept in Acceptance.objects.filter(member_BOJid = myID).order_by('problem_index') :
         problem_list.append(accept.problem_key)
     
     data = {
         'myID' : myID,
         'problem_list' : problem_list
     }
-
+    
     return render(request, 'view_personal_stat_page.html', data)
