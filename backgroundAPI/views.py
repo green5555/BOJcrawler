@@ -9,7 +9,6 @@ from .utils import ProblemPageCrawler, HongikPageCrawler
 from bs4 import BeautifulSoup
 from datetime import timedelta
 
-'''
 @background(schedule=10)
 def hello():
     print('hello')
@@ -18,7 +17,6 @@ def hello():
 def test(reqeust):
     hello()
     return HttpResponse("Good!")
-'''
 
 #페이지 로드 후 10초 후 예약
 @background(schedule=10)
@@ -32,6 +30,7 @@ def crawl_all_problem(request):
 
 @background(schedule=10)
 def do_crawl_all_hongik_user(reapeat = 60*15):
+    print('go')
     HongikPageCrawler().crawl_all_pages()
     
 @login_required

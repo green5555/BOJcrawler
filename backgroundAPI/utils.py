@@ -72,7 +72,7 @@ class HongikPageCrawler :
         pageCnt = 1
         now = time.time()
         while pageCnt <= 50 :
-            if crawl_page(pageCnt) == False :
+            if self.crawl_page(pageCnt) == False :
                 break
             print('HongikPageCrawler - crawl page {} / time = {}'.format(page, now - time.time()))
 
@@ -100,7 +100,7 @@ class ProblemPageCrawler:
         pageCnt = 1
         now = time.time()
         while pageCnt <= 1000 :
-            if crawl_page(pageCnt) == False :
+            if self.crawl_page(pageCnt) == False :
                 break
             time.sleep(1.0)
             print('ProblemPageCrawler - crawl page {} / time = {}'.format(page, now - time.time()))
