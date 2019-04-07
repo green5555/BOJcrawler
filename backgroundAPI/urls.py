@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import test_crawl
+from .views import crawl_all_hongik_user, crawl_all_problem
+
 
 urlpatterns = [
-    #path('test', test, name='test'),
-    #path('crawl_all_problem', crawl_all_problem)
-    path('test_crawl', test_crawl)
+    path('crawl_all_hongik_user',crawl_all_hongik_user),
+    path('crawl_all_problem', crawl_all_problem)
 ]

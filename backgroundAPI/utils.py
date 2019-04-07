@@ -51,7 +51,6 @@ class HongikPageCrawler :
         requested = requests.get(url)
         if requested.status_code >= 400 :
             return False
-        print('HongikPageCrawler - crawl page {}'.format(page))
         html = requested.text
         mySoup = BeautifulSoup(html, 'html.parser')
 
@@ -71,9 +70,11 @@ class HongikPageCrawler :
 
     def crawl_all_pages(self) :
         pageCnt = 1
+        now = time.time()
         while pageCnt <= 50 :
             if crawl_page(pageCnt) == False :
-                break       
+                break
+            print('HongikPageCrawler - crawl page {} / time = {}'.format(page, now - time.time()))
 
 class ProblemPageCrawler:
 
@@ -82,7 +83,6 @@ class ProblemPageCrawler:
         requested = requests.get(url)
         if requested.status_code >= 400 :
             return False
-        print('ProblemPageCrawler - crawl page {}'.format(page))
         html = requested.text
         mySoup = BeautifulSoup(html, 'html.parser')
 
@@ -98,9 +98,12 @@ class ProblemPageCrawler:
 
     def crawl_all_pages(self):
         pageCnt = 1
+        now = time.time()
         while pageCnt <= 1000 :
             if crawl_page(pageCnt) == False :
                 break
+            time.sleep(1.0)
+            print('ProblemPageCrawler - crawl page {} / time = {}'.format(page, now - time.time()))
 
 '''
 class ProblemCrawler:

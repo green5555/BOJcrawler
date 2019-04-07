@@ -22,18 +22,19 @@ def test(reqeust):
 
 #페이지 로드 후 10초 후 예약
 @background(schedule=10)
-def do_crawl_all_problem(reapeat = 60*60*24):
-    pass
+def do_crawl_all_problem(reapeat = 60*60):
+    ProblemPageCrawler().crawl_all_pages()
     
 @login_required
 def crawl_all_problem(request):
     do_crawl_all_problem()
     return HttpResponse("OK!")
 
-def test_crawl(request):
-    #p = ProblemPageCrawler()
-    #p.crawl_page(1)
-    HongikPageCrawler().crawl_page(1)
-
-    return HttpResponse("OK!")
+@background(schedule=10)
+def do_crawl_all_hongik_user(reapeat = 60*15):
+    HongikPageCrawler().crawl_all_pages()
     
+@login_required
+def crawl_all_hongik_user(request):
+    do_crawl_all_hongik_user()
+    return HttpResponse("OK!")
