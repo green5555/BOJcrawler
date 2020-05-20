@@ -62,7 +62,7 @@ class HongikPageCrawler :
             try :
                 mem = Member.objects.get(BOJid = id)
                 if mem.accept_number != accept_number :
-                    raise AcceptNumberNoMatch
+                    raise
             except :
                 UserPageCrawler(BOJid, accept_number).crawl()
                 
@@ -74,7 +74,7 @@ class HongikPageCrawler :
         while pageCnt <= 50 :
             if self.crawl_page(pageCnt) == False :
                 break
-            print('HongikPageCrawler - crawl page {} / time = {}'.format(page, now - time.time()))
+            print('HongikPageCrawler - crawl page {} / time = {}'.format(pageCnt, now - time.time()))
 
 class ProblemPageCrawler:
 
@@ -103,7 +103,7 @@ class ProblemPageCrawler:
             if self.crawl_page(pageCnt) == False :
                 break
             time.sleep(1.0)
-            print('ProblemPageCrawler - crawl page {} / time = {}'.format(page, now - time.time()))
+            print('ProblemPageCrawler - crawl page {} / time = {}'.format(pageCnt, now - time.time()))
 
 '''
 class ProblemCrawler:
